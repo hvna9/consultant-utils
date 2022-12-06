@@ -1,4 +1,4 @@
-package com.github.h9lib.consultantutils.mock;
+package com.github.h9lib.consultantutils.testing.mock;
 
 import java.io.File;
 import java.io.IOException;

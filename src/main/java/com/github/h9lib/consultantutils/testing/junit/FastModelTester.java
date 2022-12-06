@@ -1,5 +1,6 @@
-package com.github.h9lib.consultantutils.junit;
+package com.github.h9lib.consultantutils.testing.junit;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class FastModelTester {
@@ -10,25 +11,23 @@ public class FastModelTester {
 	 * FastModelTester.testAllModels(ClassOne.class, Class2.class, Class3.class, ...);
 	 * 
 	 * @param classes all DTO and Models classes must be tested in their getter and setters methods
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 * @throws InvocationTargetException 
+	 * @throws IllegalArgumentException 
 	 */
-	public static void testAllModels(Class... classes) {
-		try {
+	public static void testAllModels(Class... classes) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException  {
 			for(int i=0; i<classes.length; i++) {
 				allGetSet(classes[i]);
 			}
-		} catch(Exception ex) {
-			ex.printStackTrace();
-		}
 	}
 
-	private static void allGetSet(Class c) {
+	private static void allGetSet(Class c) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		Object inst;
 		Object obj = null;
-		try {
 			inst = c.newInstance();
 
 			for(Method m : c.getMethods()) {
-				try {	
 					if(m.getName().startsWith("get")) {
 						m.invoke(inst);
 					}else if(m.getName().startsWith("is")) {
@@ -36,13 +35,7 @@ public class FastModelTester {
 					}else {
 						m.invoke(inst,obj);
 					}
-				}catch (Exception ex) {
-					ex.printStackTrace();
-				}
 			}
 			inst.toString();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
 	}
 }
