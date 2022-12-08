@@ -40,10 +40,11 @@ public class DateManipulator {
 	}
 
 	/**
+	 * It converts a String with specified format-style into a Timestamp object
 	 * 
 	 * @param date
 	 * @param format
-	 * @return
+	 * @return Timestamp
 	 */
 	public static Timestamp stringToTimestamp(String date, String format) {
 		try {
@@ -57,18 +58,20 @@ public class DateManipulator {
 	}
 	
 	/**
+	 * It converts a Date into LocalDateTime
 	 * 
 	 * @param date
-	 * @return
+	 * @return LocalDateTime with systemDefault ZoneId
 	 */
     public static LocalDateTime dateToLocalDateTime(Date date) {
         return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
     }
 
     /**
+     * It converts a LocalDateTime into a Date.
      * 
      * @param localDateTime
-     * @return
+     * @return the converted Date.
      */
     public static Date localDateTimeToDate(LocalDateTime localDateTime) {
         return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());

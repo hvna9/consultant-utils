@@ -26,7 +26,7 @@ public class ObjectManipulator {
 	 *  
 	 * @param <T>
 	 * @param obj
-	 * @return
+	 * @return the string as Json format which maps the Object
 	 * @throws JsonProcessingException
 	 */
 	public static <T> String convertToJson(T obj) throws JsonProcessingException {
