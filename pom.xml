@@ -3,7 +3,7 @@
 
 	<groupId>com.github.h9cu</groupId>
 	<artifactId>consultant-utils</artifactId>
-	<version>0.1.3-SNAPSHOT</version>
+	<version>v0.1.3-alpha</version>
 	<name>Consultant Utils</name>
 
 	<properties>
@@ -33,7 +33,7 @@
 		<developerConnection>scm:git:https://github.com/csdm/consultant-utils.git
         </developerConnection>
 		<url>https://github.com/csdm/consultant-utils</url>
-		<tag>consultant-utils</tag>
+		<tag>v0.1.3-alpha</tag>
 	</scm>
 
 	<dependencies>
