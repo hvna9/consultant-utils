@@ -3,7 +3,7 @@
 
 	<groupId>com.github.h9cu</groupId>
 	<artifactId>consultant-utils</artifactId>
-	<version>v0.1.3-alpha</version>
+	<version>0.1.3-SNAPSHOT</version>
 	<name>Consultant Utils</name>
 
 	<properties>
