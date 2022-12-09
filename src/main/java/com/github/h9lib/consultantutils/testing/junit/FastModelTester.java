@@ -6,9 +6,9 @@ import java.lang.reflect.Method;
 public class FastModelTester {
 	/**
 	 * It allows to create fast junit tests for getters and setters methods of simple Java models and beans.
-	 * Call the methods passing as parameters all the classess you want to cover, for example:
-	 * FastModelTester.testAllModels(ClassOne.class);
-	 * FastModelTester.testAllModels(ClassOne.class, Class2.class, Class3.class, ...);
+	 * Call the methods passing as parameters all the classes you want to cover, for example:
+	 * <code>FastModelTester.testAllModels(ClassOne.class);</code>
+	 * <code>FastModelTester.testAllModels(ClassOne.class, Class2.class, Class3.class, ...);</code>
 	 * 
 	 * @param classes all DTO and Models classes must be tested in their getter and setters methods
 	 * @throws IllegalAccessException 
