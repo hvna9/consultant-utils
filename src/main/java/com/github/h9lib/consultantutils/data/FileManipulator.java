@@ -34,7 +34,7 @@ public class FileManipulator {
 	 * 		  A filename example could be: <i>file.txt</i>
 	 * @return a String which represents the retrieved MimeType.
 	 */
-	public static String retrieveMimeType(String filename) {
+	public static final String retrieveMimeType(String filename) {
 		String extension = retrieveExtensionFromFilename(filename);
 
 		if(FileExtension.CSV.equalsIgnoreCase(extension)) return "text/csv";
@@ -69,21 +69,34 @@ public class FileManipulator {
 	 * 		  A filename example could be: <i>file.txt</i>
 	 * @return a String which represents the retrieved extension.
 	 */
-	public static String retrieveExtensionFromFilename(String filename) {
+	public static final String retrieveExtensionFromFilename(String filename) {
 		return Optional.of(filename)
 				.map(fn -> fn.split("\\."))
 				.map(splittedFileName -> splittedFileName[splittedFileName.length - 1])
 				.get();
 	}
 	
-	public static <T> String generateExcelAsBase64(List<T> obj, Class<T> clazz) throws IllegalArgumentException, IllegalAccessException, MissingAnnotationException, IOException {
+	/**
+	 * This method allow the user to generate an Excel from a list of Object. To use the method you have to pass both the parametrized 
+	 * list and the class of the parametric object. For example: <br>
+	 * <code>FileManipulator.generateExcelAsByteArray(peopleList, Person.class);</code> <br>
+	 * where <code>peopleList</code> is defined as <code>List<Person></code>. <br>
+	 * The method return the Excel encripted as Base64 string.
+	 * 
+	 * 
+	 * @param <T> The generic class
+	 * @param obj The list to export as Excel. Each element of this list will be a row of the Excel.
+	 * @param clazz The parametric class
+	 * @return a String that represents the Base64 encripted file
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 * @throws MissingAnnotationException
+	 * @throws IOException
+	 * @throws NoSuchFieldException
+	 * @throws SecurityException
+	 */
+	public static final <T> String generateExcelAsBase64(List<T> obj, Class<T> clazz) throws IllegalArgumentException, IllegalAccessException, MissingAnnotationException, IOException, NoSuchFieldException, SecurityException {
 		Workbook workbook;
-//		final Class<T> clazz;
-		if(!CollectionUtils.isEmpty(obj))
-			System.out.println("clazz*** -> " + clazz.getName());
-			//clazz = getType(obj.get(0));
-		else
-			throw new IllegalArgumentException("Non-valid list. It could be empty or null");
 		workbook = clazz.getAnnotation(XsltExcel.class).isXsltExcel()
 				 ? new XSSFWorkbook() 
 				 : new HSSFWorkbook();
@@ -94,21 +107,47 @@ public class FileManipulator {
 		workbook.write(outputStream);
 		workbook.close();
 		
-		
-		return Base64.encodeBase64(outputStream.toByteArray()).toString();
+		return new String(Base64.encodeBase64(outputStream.toByteArray()));
 	}
 	
-	//TODO: cambiare tipo di ritorno e nome metodo (eventualmente chiamarlo exportExcel e differenziare
-	//la signature a seconda che si voglia esportare un ByteArray o altro **** DA CAPIRE
-	public static <T> void generateExcel(List<T> obj, Workbook workbook, Class<T> clazz) throws IllegalArgumentException, MissingAnnotationException, IllegalAccessException {
-//		final Class<T> clazz;
-		if(!CollectionUtils.isEmpty(obj)) {
-		//	clazz = getType(obj.get(0));
-//			clazz = obj.get(0).getClass();
-			//System.out.println("clazz: " + clazz.getClass());
-		}
-		else
+	/**
+	 * This method allow the user to generate an Excel from a list of Object. To use the method you have to pass both the parametrized 
+	 * list and the class of the parametric object. For example:  <br>
+	 * <code>FileManipulator.generateExcelAsByteArray(peopleList, Person.class);</code> <br>
+	 * where <code>peopleList</code> is defined as <code>List<Person></code>. <br>
+	 * The method return the Excel as a ByteArray (in particular as a ByteArrayOutputStream).
+	 * 
+	 * 
+	 * @param <T> The generic class
+	 * @param obj The list to export as Excel. Each element of this list will be a row of the Excel.
+	 * @param clazz The parametric class
+	 * @return ByteArrayOutputStream containing the file
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 * @throws MissingAnnotationException
+	 * @throws IOException
+	 * @throws NoSuchFieldException
+	 * @throws SecurityException
+	 */
+	public static final <T> ByteArrayOutputStream generateExcelAsByteArray(List<T> obj, Class<T> clazz) throws IllegalArgumentException, IllegalAccessException, MissingAnnotationException, IOException, NoSuchFieldException, SecurityException {
+		Workbook workbook;
+		workbook = clazz.getAnnotation(XsltExcel.class).isXsltExcel()
+				 ? new XSSFWorkbook() 
+				 : new HSSFWorkbook();
+		
+		generateExcel(obj, workbook, clazz);
+		
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		workbook.write(outputStream);
+		workbook.close();
+		
+		return outputStream;
+	}
+	
+	private static <T> void generateExcel(List<T> obj, Workbook workbook, Class<T> clazz) throws IllegalArgumentException, MissingAnnotationException, IllegalAccessException, NoSuchFieldException, SecurityException {
+		if(CollectionUtils.isEmpty(obj)) {
 			throw new IllegalArgumentException("Non-valid list. It could be empty or null");
+		}
 		
 		//Workbook workbook;
 		Sheet sheet;
@@ -118,26 +157,22 @@ public class FileManipulator {
 		Font dataRowFont;
 		//Cell cell;
 		
-		if(clazz.isAnnotationPresent(ToExcel.class) && clazz.getAnnotation(ToExcel.class).exportToExcel()) {
+		if(!(clazz.isAnnotationPresent(ToExcel.class) && clazz.getAnnotation(ToExcel.class).exportToExcel())) { 
+			throw new MissingAnnotationException("The class " + clazz.getName() + " cannot be exported as Excel. To export as Excel, the class must be annotated with @ToExcel.");
+		} else {
 			if(!clazz.isAnnotationPresent(XsltExcel.class))
 				throw new MissingAnnotationException("It needed to specify if the Excel extension must be .xslt or not.");
-			//TODO: SISTEMARE QUESTO CONTROLLO --> VANNO CONTROLLATI I FIELDS
-			//			if(!(clazz.isAnnotationPresent(DocBindByName.class) || clazz.isAnnotationPresent(DocBindByPosition.class)))
-//				throw new MissingAnnotationException("No column defined");
+			Field[] fields = clazz.getDeclaredFields();
+			for(Field f : fields) {
+				if(!(f.isAnnotationPresent(DocBindByName.class) || f.isAnnotationPresent(DocBindByPosition.class)))
+					throw new MissingAnnotationException("No column defined");
+			}
 			
-//			workbook = clazz.getAnnotation(XsltExcel.class).isXsltExcel()
-//					 ? new XSSFWorkbook() 
-//					 : new HSSFWorkbook();
-			sheet = workbook.createSheet(clazz.getName());
+			sheet = workbook.createSheet(clazz.getName().substring(clazz.getName().lastIndexOf('.')+1));
 			headerRowFont = workbook.createFont();
 			dataRowFont = workbook.createFont();
 			headerRowStyle = workbook.createCellStyle();
 			dataRowStyle = workbook.createCellStyle();
-			
-			Field[] fields = clazz.getDeclaredFields();
-			for(Field f : fields) {
-				System.out.println(f.getName());
-			}
 
 			/*** START WRITING HEADER ROW ***/
 	        Row headerRow = sheet.createRow(0);
@@ -149,7 +184,6 @@ public class FileManipulator {
 			
 			for(Field f : fields) {
 				String columnName = f.getAnnotation(DocBindByName.class).column();
-				System.out.println("\n\n**** " + columnName + " ****\n\n");
 				int columnPosition = f.getAnnotation(DocBindByPosition.class).position();
 				sheet.autoSizeColumn(columnPosition);
 				Cell cell = headerRow.createCell(columnPosition);
@@ -166,42 +200,31 @@ public class FileManipulator {
 			dataRowStyle.setFont(dataRowFont);
 			dataRowStyle.setAlignment(HorizontalAlignment.LEFT);
 			
-			//creo la riga per ogni elemento della lista
+			//Create the row for each element of the list
 			for(T t : obj) {
-				Row dataRow = sheet.createRow(rowCount++); //TODO: forse qui ci va solo rowCount e rowCount++ va fatto in seguito
+				Row dataRow = sheet.createRow(rowCount++);
 				dataRow.setRowStyle(dataRowStyle);
 				int cellCount = 0;
 				
-				//creo la cella per la singola riga
+				//Create a cell for each element in the row
 				for(Field f : fields) {
+					f.setAccessible(true);
 					int columnPosition = f.getAnnotation(DocBindByPosition.class).position();
 					sheet.autoSizeColumn(columnPosition);
 					Cell cell = dataRow.createCell(columnPosition);
 					
-					//TODO: controllare se f.get(clazz) va bene 
-					if (f.get(clazz) instanceof Integer) {
-			            cell.setCellValue((Integer) f.get(clazz));
-			        } else if (f.get(clazz) instanceof Boolean) {
-			            cell.setCellValue((Boolean) f.get(clazz));
+					if (f.get(t) instanceof Integer) {
+			            cell.setCellValue((Integer) f.get(t));
+			        } else if (f.get(t) instanceof Boolean) {
+			            cell.setCellValue((Boolean) f.get(t));
 			        }else {
-			            cell.setCellValue((String) f.get(clazz));
+			            cell.setCellValue((String) f.get(t));
 			        }
 					
 					cell.setCellStyle(dataRowStyle);
 				}
 			}
 			/***  END WRITING DATA ROWS  ***/
-			
-			//TODO: sistemare posiione di questa eccezione
-			throw new MissingAnnotationException("The class " + clazz.getName() + "cannot be exported as Excel.");
 		}
-		
-		return; //return se non è presente l'annotazione ToExcel
-	}
-	
-	//
-	private static <T> Class<T> getType(T type) {
-		System.out.println("***" + type.getClass());
-		return null;
 	}
 }

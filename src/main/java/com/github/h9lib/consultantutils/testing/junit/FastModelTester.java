@@ -16,7 +16,7 @@ public class FastModelTester {
 	 * @throws InvocationTargetException 
 	 * @throws IllegalArgumentException 
 	 */
-	public static void testAllModels(Class... classes) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException  {
+	public static final void testAllModels(Class... classes) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException  {
 			for(int i=0; i<classes.length; i++) {
 				allGetSet(classes[i]);
 			}

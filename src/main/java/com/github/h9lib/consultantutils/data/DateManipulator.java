@@ -18,7 +18,7 @@ public class DateManipulator {
 	 * @return the Date passed as a String
 	 * @throws ParseException
 	 */
-	public static Date stringToDate(String date, String pattern) throws ParseException {
+	public static final Date stringToDate(String date, String pattern) throws ParseException {
 		SimpleDateFormat sdf = (SimpleDateFormat) SimpleDateFormat.getDateInstance();
 		sdf.applyLocalizedPattern(pattern);
 		return sdf.parse(date);
@@ -31,7 +31,7 @@ public class DateManipulator {
 	 * @param pattern can be null
 	 * @return the date as a string
 	 */
-	public static String dateToString(Date date, String pattern) {
+	public static final String dateToString(Date date, String pattern) {
 		if(StringUtils.isEmpty(pattern)) 
 			return date.toString();
 
@@ -46,7 +46,7 @@ public class DateManipulator {
 	 * @param format
 	 * @return Timestamp
 	 */
-	public static Timestamp stringToTimestamp(String date, String format) {
+	public static final Timestamp stringToTimestamp(String date, String format) {
 		try {
 			SimpleDateFormat dateFormat = new SimpleDateFormat(format);
 			Date parsedDate = dateFormat.parse(date);
@@ -63,7 +63,7 @@ public class DateManipulator {
 	 * @param date
 	 * @return LocalDateTime with systemDefault ZoneId
 	 */
-    public static LocalDateTime dateToLocalDateTime(Date date) {
+    public static final LocalDateTime dateToLocalDateTime(Date date) {
         return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
     }
 
@@ -73,7 +73,7 @@ public class DateManipulator {
      * @param localDateTime
      * @return the converted Date.
      */
-    public static Date localDateTimeToDate(LocalDateTime localDateTime) {
+    public static final Date localDateTimeToDate(LocalDateTime localDateTime) {
         return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
 }

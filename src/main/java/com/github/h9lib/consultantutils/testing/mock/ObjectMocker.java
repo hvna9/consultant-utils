@@ -25,7 +25,7 @@ public class ObjectMocker {
 	 * @param className the class of the object you need to mock
 	 * @return a mocked object
 	 */
-	public static <T> T createSingleObject(Class<T> className) {
+	public static final <T> T createSingleObject(Class<T> className) {
 		PodamFactory podam = new PodamFactoryImpl();
 		return podam.manufacturePojo(className);
 	}
@@ -39,7 +39,7 @@ public class ObjectMocker {
 	 * @param size the number of mocked elements in the returned list
 	 * @return a list of mocked objects
 	 */
-	public static <T> List<T> createMultiObject(Class<T> className, int size) {
+	public static final <T> List<T> createMultiObject(Class<T> className, int size) {
 		List<T> result = new ArrayList<T>();
 		for (int i = 0; i < size; i++) {
 
@@ -61,7 +61,7 @@ public class ObjectMocker {
 	 * @return the mocked object
 	 * @throws IOException
 	 */
-	public static <T> T getMock(String mockName, Class<T> className) throws IOException {
+	public static final <T> T getMock(String mockName, Class<T> className) throws IOException {
 		ClassLoader classLoader = className.getClassLoader();
 		ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);	
 		
@@ -87,7 +87,7 @@ public class ObjectMocker {
 	 * @return the mocked object
 	 * @throws IOException
 	 */
-	public static <T> T getMock(String mockName, String subfolderPath, Class<T> className) throws IOException {
+	public static final <T> T getMock(String mockName, String subfolderPath, Class<T> className) throws IOException {
 		ClassLoader classLoader = className.getClassLoader();
 		ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);	
 

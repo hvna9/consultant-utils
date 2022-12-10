@@ -16,7 +16,7 @@ public class ObjectManipulator {
 	 * @throws JsonMappingException
 	 * @throws JsonProcessingException
 	 */
-	public static <T> T convertToObject(String json, Class<T> className) throws JsonMappingException, JsonProcessingException {
+	public static final <T> T convertToObject(String json, Class<T> className) throws JsonMappingException, JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		return objectMapper.readValue(json, className);
 	}
@@ -29,7 +29,7 @@ public class ObjectManipulator {
 	 * @return the string as Json format which maps the Object
 	 * @throws JsonProcessingException
 	 */
-	public static <T> String convertToJson(T obj) throws JsonProcessingException {
+	public static final <T> String convertToJson(T obj) throws JsonProcessingException {
 		return new ObjectMapper().writeValueAsString(obj);
 	}
 }

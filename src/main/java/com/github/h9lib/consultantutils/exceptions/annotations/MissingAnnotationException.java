@@ -1,18 +1,13 @@
 package com.github.h9lib.consultantutils.exceptions.annotations;
 
 /**
- * TODO: SCRIVERE JAVADOC
- * 
- * @author DiMauroCS
- *
+ * Exception to report the missing of an annotation where it is needed.
  */
-public class MissingAnnotationException extends Exception {
+public final class MissingAnnotationException extends Exception {
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * TODO: SCRIVERE JAVADOC
-	 * 
-	 * @param message
+	 * @param message the exception message
 	 */
 	public MissingAnnotationException(String message) {
         super(message);
