@@ -13,10 +13,10 @@ public class DateManipulator {
 	/**
 	 * It creates a Date from a String
 	 * 
-	 * @param date
+	 * @param date the String that represents the date you want to convert into Date type
 	 * @param pattern
 	 * @return the Date passed as a String
-	 * @throws ParseException
+	 * @throws ParseException 
 	 */
 	public static final Date stringToDate(String date, String pattern) throws ParseException {
 		SimpleDateFormat sdf = (SimpleDateFormat) SimpleDateFormat.getDateInstance();
@@ -27,8 +27,8 @@ public class DateManipulator {
 	/**
 	 * Transform a Date into a String, based on the passed date-pattern
 	 * 
-	 * @param date
-	 * @param pattern can be null
+	 * @param date the object Date you want convert as a String
+	 * @param pattern 
 	 * @return the date as a string
 	 */
 	public static final String dateToString(Date date, String pattern) {
@@ -42,13 +42,13 @@ public class DateManipulator {
 	/**
 	 * It converts a String with specified format-style into a Timestamp object
 	 * 
-	 * @param date
-	 * @param format
+	 * @param date the String that represents the date you want to convert into Timestamp type
+	 * @param pattern 
 	 * @return Timestamp
 	 */
-	public static final Timestamp stringToTimestamp(String date, String format) {
+	public static final Timestamp stringToTimestamp(String date, String pattern) {
 		try {
-			SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+			SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
 			Date parsedDate = dateFormat.parse(date);
 			Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
 			return timestamp;
@@ -60,7 +60,7 @@ public class DateManipulator {
 	/**
 	 * It converts a Date into LocalDateTime
 	 * 
-	 * @param date
+	 * @param date 
 	 * @return LocalDateTime with systemDefault ZoneId
 	 */
     public static final LocalDateTime dateToLocalDateTime(Date date) {
@@ -70,7 +70,7 @@ public class DateManipulator {
     /**
      * It converts a LocalDateTime into a Date.
      * 
-     * @param localDateTime
+     * @param localDateTime 
      * @return the converted Date.
      */
     public static final Date localDateTimeToDate(LocalDateTime localDateTime) {

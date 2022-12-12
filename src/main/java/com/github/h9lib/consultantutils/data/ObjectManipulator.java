@@ -7,14 +7,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ObjectManipulator {
 	/**
-	 * To create an Object from a Json String. Based on Jackson features.
+	 * To create an Object from a JSON String. Based on Jackson features.
 	 * 
 	 * @param <T>
-	 * @param json
-	 * @param className
-	 * @return the Object mapped from the Json String.
-	 * @throws JsonMappingException
-	 * @throws JsonProcessingException
+	 * @param json the JSON as a String.
+	 * @param className the *.class Class in which the JSON should be mapped.
+	 * @return the Object mapped from the JSON String.
+	 * @throws JsonMappingException 
+	 * @throws JsonProcessingException 
 	 */
 	public static final <T> T convertToObject(String json, Class<T> className) throws JsonMappingException, JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -26,7 +26,7 @@ public class ObjectManipulator {
 	 *  
 	 * @param <T>
 	 * @param obj
-	 * @return the string as Json format which maps the Object
+	 * @return the string as Json format which maps the Object.
 	 * @throws JsonProcessingException
 	 */
 	public static final <T> String convertToJson(T obj) throws JsonProcessingException {

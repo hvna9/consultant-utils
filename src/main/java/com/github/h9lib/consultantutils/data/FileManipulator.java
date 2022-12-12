@@ -80,18 +80,18 @@ public class FileManipulator {
 	 * This method allow the user to generate an Excel from a list of Object. To use the method you have to pass both the parametrized 
 	 * list and the class of the parametric object. For example: <br>
 	 * <code>FileManipulator.generateExcelAsByteArray(peopleList, Person.class);</code> <br>
-	 * where <code>peopleList</code> is defined as <code>List<Person></code>. <br>
+	 * where <code>peopleList</code> is defined as <code>List&lt;Person&gt;</code>. <br>
 	 * The method return the Excel encripted as Base64 string.
 	 * 
 	 * 
-	 * @param <T> The generic class
+	 * @param <T> 
 	 * @param obj The list to export as Excel. Each element of this list will be a row of the Excel.
-	 * @param clazz The parametric class
-	 * @return a String that represents the Base64 encripted file
-	 * @throws IllegalArgumentException
-	 * @throws IllegalAccessException
-	 * @throws MissingAnnotationException
-	 * @throws IOException
+	 * @param clazz The parametric class.
+	 * @return a String that represents the Base64 encripted file.
+	 * @throws IllegalArgumentException 
+	 * @throws IllegalAccessException 
+	 * @throws MissingAnnotationException 
+	 * @throws IOException 
 	 * @throws NoSuchFieldException
 	 * @throws SecurityException
 	 */
@@ -114,18 +114,18 @@ public class FileManipulator {
 	 * This method allow the user to generate an Excel from a list of Object. To use the method you have to pass both the parametrized 
 	 * list and the class of the parametric object. For example:  <br>
 	 * <code>FileManipulator.generateExcelAsByteArray(peopleList, Person.class);</code> <br>
-	 * where <code>peopleList</code> is defined as <code>List<Person></code>. <br>
+	 * where <code>peopleList</code> is defined as <code>List&lt;Person&gt;</code>. <br>
 	 * The method return the Excel as a ByteArray (in particular as a ByteArrayOutputStream).
 	 * 
 	 * 
-	 * @param <T> The generic class
+	 * @param <T> 
 	 * @param obj The list to export as Excel. Each element of this list will be a row of the Excel.
 	 * @param clazz The parametric class
 	 * @return ByteArrayOutputStream containing the file
-	 * @throws IllegalArgumentException
-	 * @throws IllegalAccessException
-	 * @throws MissingAnnotationException
-	 * @throws IOException
+	 * @throws IllegalArgumentException 
+	 * @throws IllegalAccessException 
+	 * @throws MissingAnnotationException 
+	 * @throws IOException 
 	 * @throws NoSuchFieldException
 	 * @throws SecurityException
 	 */
