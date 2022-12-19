@@ -33,7 +33,7 @@
 		<developerConnection>scm:git:https://github.com/csdm/consultant-utils.git
         </developerConnection>
 		<url>https://github.com/csdm/consultant-utils</url>
-		<tag>consultant-utils-0.1.5</tag>
+		<tag>0.1.5</tag>
 	</scm>
 
 	<dependencies>

@@ -133,7 +133,7 @@ public class FileManipulator {
 	 */
 	public static final <T> byte[] generateExcelAsByteArray(List<T> obj, Class<T> clazz) throws IllegalArgumentException, IllegalAccessException, MissingAnnotationException, IOException, NoSuchFieldException, SecurityException {
 		Workbook workbook;
-		workbook = clazz.getAnnotation(XslxExcel.class).isXsltExcel()
+		workbook = clazz.getAnnotation(XslxExcel.class).isXslxExcel()
 				 ? new XSSFWorkbook() 
 				 : new HSSFWorkbook();
 		
