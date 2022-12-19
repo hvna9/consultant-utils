@@ -99,7 +99,7 @@ public class FileManipulator {
 		Workbook workbook;
 		
 		//workbook generation for Excel 1997-2007 and 2007-higher
-		workbook = clazz.getAnnotation(XslxExcel.class).isXsltExcel()
+		workbook = clazz.getAnnotation(XslxExcel.class).isXslxExcel()
 				 ? new XSSFWorkbook() 
 				 : new HSSFWorkbook();
 		
@@ -161,7 +161,7 @@ public class FileManipulator {
 			throw new MissingAnnotationException("The class " + clazz.getName() + " cannot be exported as Excel. To export as Excel, the class must be annotated with @ToExcel.");
 		} else {
 			if(!clazz.isAnnotationPresent(XslxExcel.class))
-				throw new MissingAnnotationException("It needed to specify if the Excel extension must be .xslt or not.");
+				throw new MissingAnnotationException("It needed to specify if the Excel extension must be .xslx or not.");
 			Field[] fields = clazz.getDeclaredFields();
 			for(Field f : fields) {
 				if(!(f.isAnnotationPresent(ExcelColumnName.class) || f.isAnnotationPresent(ExcelColumnPosition.class)))
