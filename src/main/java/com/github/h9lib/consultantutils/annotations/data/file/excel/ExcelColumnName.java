@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface DocBindByPosition {
-	int position() default 0;
+public @interface ExcelColumnName {
+	String column() default "";
 }

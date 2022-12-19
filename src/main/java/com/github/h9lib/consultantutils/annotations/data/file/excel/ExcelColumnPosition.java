@@ -6,8 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface XsltExcel {
-	//true if the excel version is 2007 or higher (.xslt extension) - false if the excel version is 2003
-	boolean isXsltExcel() default false;
+@Target(ElementType.FIELD)
+public @interface ExcelColumnPosition {
+	int position() default 0;
 }

@@ -18,10 +18,10 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import com.github.h9lib.consultantutils.annotations.data.file.excel.DocBindByName;
-import com.github.h9lib.consultantutils.annotations.data.file.excel.DocBindByPosition;
+import com.github.h9lib.consultantutils.annotations.data.file.excel.ExcelColumnName;
+import com.github.h9lib.consultantutils.annotations.data.file.excel.ExcelColumnPosition;
 import com.github.h9lib.consultantutils.annotations.data.file.excel.ToExcel;
-import com.github.h9lib.consultantutils.annotations.data.file.excel.XsltExcel;
+import com.github.h9lib.consultantutils.annotations.data.file.excel.XslxExcel;
 import com.github.h9lib.consultantutils.constants.FileExtension;
 import com.github.h9lib.consultantutils.exceptions.annotations.MissingAnnotationException;
 
@@ -97,7 +97,9 @@ public class FileManipulator {
 	 */
 	public static final <T> String generateExcelAsBase64(List<T> obj, Class<T> clazz) throws IllegalArgumentException, IllegalAccessException, MissingAnnotationException, IOException, NoSuchFieldException, SecurityException {
 		Workbook workbook;
-		workbook = clazz.getAnnotation(XsltExcel.class).isXsltExcel()
+		
+		//workbook generation for Excel 1997-2007 and 2007-higher
+		workbook = clazz.getAnnotation(XslxExcel.class).isXsltExcel()
 				 ? new XSSFWorkbook() 
 				 : new HSSFWorkbook();
 		
@@ -129,9 +131,9 @@ public class FileManipulator {
 	 * @throws NoSuchFieldException
 	 * @throws SecurityException
 	 */
-	public static final <T> ByteArrayOutputStream generateExcelAsByteArray(List<T> obj, Class<T> clazz) throws IllegalArgumentException, IllegalAccessException, MissingAnnotationException, IOException, NoSuchFieldException, SecurityException {
+	public static final <T> byte[] generateExcelAsByteArray(List<T> obj, Class<T> clazz) throws IllegalArgumentException, IllegalAccessException, MissingAnnotationException, IOException, NoSuchFieldException, SecurityException {
 		Workbook workbook;
-		workbook = clazz.getAnnotation(XsltExcel.class).isXsltExcel()
+		workbook = clazz.getAnnotation(XslxExcel.class).isXsltExcel()
 				 ? new XSSFWorkbook() 
 				 : new HSSFWorkbook();
 		
@@ -141,7 +143,7 @@ public class FileManipulator {
 		workbook.write(outputStream);
 		workbook.close();
 		
-		return outputStream;
+		return outputStream.toByteArray();
 	}
 	
 	private static <T> void generateExcel(List<T> obj, Workbook workbook, Class<T> clazz) throws IllegalArgumentException, MissingAnnotationException, IllegalAccessException, NoSuchFieldException, SecurityException {
@@ -149,22 +151,20 @@ public class FileManipulator {
 			throw new IllegalArgumentException("Non-valid list. It could be empty or null");
 		}
 		
-		//Workbook workbook;
 		Sheet sheet;
 		CellStyle headerRowStyle;
 		CellStyle dataRowStyle;
 		Font headerRowFont;
 		Font dataRowFont;
-		//Cell cell;
 		
 		if(!(clazz.isAnnotationPresent(ToExcel.class) && clazz.getAnnotation(ToExcel.class).exportToExcel())) { 
 			throw new MissingAnnotationException("The class " + clazz.getName() + " cannot be exported as Excel. To export as Excel, the class must be annotated with @ToExcel.");
 		} else {
-			if(!clazz.isAnnotationPresent(XsltExcel.class))
+			if(!clazz.isAnnotationPresent(XslxExcel.class))
 				throw new MissingAnnotationException("It needed to specify if the Excel extension must be .xslt or not.");
 			Field[] fields = clazz.getDeclaredFields();
 			for(Field f : fields) {
-				if(!(f.isAnnotationPresent(DocBindByName.class) || f.isAnnotationPresent(DocBindByPosition.class)))
+				if(!(f.isAnnotationPresent(ExcelColumnName.class) || f.isAnnotationPresent(ExcelColumnPosition.class)))
 					throw new MissingAnnotationException("No column defined");
 			}
 			
@@ -183,8 +183,8 @@ public class FileManipulator {
 			headerRowStyle.setFont(headerRowFont);
 			
 			for(Field f : fields) {
-				String columnName = f.getAnnotation(DocBindByName.class).column();
-				int columnPosition = f.getAnnotation(DocBindByPosition.class).position();
+				String columnName = f.getAnnotation(ExcelColumnName.class).column();
+				int columnPosition = f.getAnnotation(ExcelColumnPosition.class).position();
 				sheet.autoSizeColumn(columnPosition);
 				Cell cell = headerRow.createCell(columnPosition);
 				
@@ -209,7 +209,7 @@ public class FileManipulator {
 				//Create a cell for each element in the row
 				for(Field f : fields) {
 					f.setAccessible(true);
-					int columnPosition = f.getAnnotation(DocBindByPosition.class).position();
+					int columnPosition = f.getAnnotation(ExcelColumnPosition.class).position();
 					sheet.autoSizeColumn(columnPosition);
 					Cell cell = dataRow.createCell(columnPosition);
 					
