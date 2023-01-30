@@ -1,9 +1,5 @@
 package com.github.h9lib.consultantutils.data;
 
-import java.nio.charset.Charset;
-import java.util.Random;
-import java.util.regex.Pattern;
-
 import org.apache.commons.lang3.StringUtils;
 
 import com.github.h9lib.consultantutils.constants.Placeholder;
