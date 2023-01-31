@@ -35,8 +35,8 @@ public class StringManipulator {
 	 * This method return a placeholder string with a specified length.
 	 * The specified length correspond to the number of characters in the returned string.
 	 * 
-	 * It returns a "Lorem Ipsum" text, if you use a fixed size of 10, 100, 200, 500 or 1000.
-	 * It returns a random string with a number of character specified by size parameter.
+	 * It returns a standard "Lorem Ipsum" text, if you use a fixed size of 10, 100, 200, 500 or 1000.
+	 * It returns a combined "Lorem Ipsum" text, with a number of character specified by size parameter.
 	 * 
 	 * @param size
 	 * @return a placeholder string
