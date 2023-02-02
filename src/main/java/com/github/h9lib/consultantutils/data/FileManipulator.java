@@ -79,15 +79,15 @@ public class FileManipulator {
 	/**
 	 * This method allow the user to generate an Excel from a list of Object. To use the method you have to pass both the parametrized 
 	 * list and the class of the parametric object. For example: <br>
-	 * <code>FileManipulator.generateExcelAsByteArray(peopleList, Person.class);</code> <br>
+	 * <code>FileManipulator.generateExcelAsBase64(peopleList, Person.class);</code> <br>
 	 * where <code>peopleList</code> is defined as <code>List&lt;Person&gt;</code>. <br>
-	 * The method return the Excel encripted as Base64 string.
+	 * The method return the Excel encrypted as Base64 string.
 	 * 
 	 * 
 	 * @param <T> 
 	 * @param obj The list to export as Excel. Each element of this list will be a row of the Excel.
 	 * @param clazz The parametric class.
-	 * @return a String that represents the Base64 encripted file.
+	 * @return a String that represents the Base64 encrypted file.
 	 * @throws IllegalArgumentException 
 	 * @throws IllegalAccessException 
 	 * @throws MissingAnnotationException 
@@ -204,7 +204,6 @@ public class FileManipulator {
 			for(T t : obj) {
 				Row dataRow = sheet.createRow(rowCount++);
 				dataRow.setRowStyle(dataRowStyle);
-				int cellCount = 0;
 				
 				//Create a cell for each element in the row
 				for(Field f : fields) {
