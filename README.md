@@ -7,7 +7,7 @@ To use the library you can import it into your Maven project, just downloading t
 <project>  
 	<dependencies>
 		<dependency>
-			<groupId>com.github.h9cu</groupId>
+			<groupId>io.github.hvna9</groupId>
 			<artifactId>consultant-utils</artifactId>
 			<version>${selected_version}</version>
 			<scope>system</scope>
@@ -23,7 +23,7 @@ All the dependencies needed to use the library are already included in the jar. 
 
 </br> </br>
 ## Documentation 
-See the api documentations clicking here: https://csdm.github.io/consultant-utils/.
+See the api documentations clicking here: https://hvna9.github.io/consultant-utils/.
 
 </br> </br>
 ## Open-Source

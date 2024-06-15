@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.github.h9lib</groupId>
+	<groupId>io.github.hvna9</groupId>
 	<artifactId>consultant-utils</artifactId>
 	<version>0.1.8-SNAPSHOT</version>
 	<name>Consultant Utils</name>
@@ -15,7 +15,7 @@
 		<repository>
 			<id>github</id>
 			<name>Consultant-Utils Java Library</name>
-			<url>https://maven.pkg.github.com/csdm/consultant-utils</url>
+			<url>https://maven.pkg.github.com/hvna9/consultant-utils</url>
 		</repository>
 	</distributionManagement>
 
@@ -23,16 +23,16 @@
 		<developer>
 			<name>Claudio S. Di Mauro</name>
 			<email>mail@claudiodimauro.it</email>
-			<organization>com.github.csdm</organization>
+			<organization>com.github.hvna9</organization>
 			<organizationUrl>https://www.claudiodimauro.it</organizationUrl>
 		</developer>
 	</developers>
 
 	<scm>
-		<connection>scm:git:git://github.com/csdm/consultant-utils.git</connection>
-		<developerConnection>scm:git:https://github.com/csdm/consultant-utils.git
+		<connection>scm:git:git://github.com/hvna9/consultant-utils.git</connection>
+		<developerConnection>scm:git:https://github.com/hvna9/consultant-utils.git
         </developerConnection>
-		<url>https://github.com/csdm/consultant-utils</url>
+		<url>https://github.com/hvna9/consultant-utils</url>
 		<tag>0.1.6-beta</tag>
 	</scm>
 
@@ -94,6 +94,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.7.0</version>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
@@ -103,6 +104,7 @@
 					</execution>
 				</executions>
 				<configuration>
+					<reportOutputDirectory>${project.basedir}/javadoc</reportOutputDirectory>
 					<additionalOptions>
 						<additionalOption>-Xdoclint:none</additionalOption>
 					</additionalOptions>

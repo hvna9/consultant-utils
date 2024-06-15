@@ -115,3 +115,6 @@ buildNumber.properties
 
 # Intellij configuration
 .idea/
+
+#MacOS folders
+.DS_Store
