@@ -37,7 +37,8 @@ extra_css:
 nav:
   - Getting started: 'index.md'
   - documentation.md
-  - Javadoc: 'https://hvna9.github.io/consultant-utils/javadoc/apidocs'
+  # - Javadoc: 'https://hvna9.github.io/consultant-utils/javadoc/apidocs'
+  - Javadoc: 'static/javadoc/apidocs'
   - usage-example.md
   - changelog.md
   - license.md

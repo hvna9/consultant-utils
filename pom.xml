@@ -23,7 +23,7 @@
 		<developer>
 			<name>Claudio S. Di Mauro</name>
 			<email>mail@claudiodimauro.it</email>
-			<organization>com.github.hvna9</organization>
+			<organization>io.github.hvna9</organization>
 			<organizationUrl>https://www.claudiodimauro.it</organizationUrl>
 		</developer>
 	</developers>
@@ -104,7 +104,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<reportOutputDirectory>${project.basedir}/javadoc</reportOutputDirectory>
+					<reportOutputDirectory>${project.basedir}/docs/docs/static/javadoc</reportOutputDirectory>
 					<additionalOptions>
 						<additionalOption>-Xdoclint:none</additionalOption>
 					</additionalOptions>
