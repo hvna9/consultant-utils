@@ -1,0 +1,53 @@
+name: Publish Javadoc to GitHub Pages
+
+on:
+  push:
+    branches:
+      - dev
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Build with Maven
+        run: mvn clean package
+
+      - name: Generate Javadoc
+        run: mvn javadoc:javadoc
+
+      - name: Deploy Javadoc to GitHub Pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Configura il branch gh-pages
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Crea una directory temporanea per il branch gh-pages
+          mkdir gh-pages
+          cd gh-pages
+          
+          # Clona il branch gh-pages
+          git clone --depth 1 --branch gh-pages https://github.com/hvna9/consultant-utils.git .
+          
+          # Crea la directory javadoc/apidocs se non esiste
+          mkdir -p javadoc/apidocs
+          
+          # Copia la Javadoc generata nella directory javadoc/apidocs
+          cp -r ../target/site/apidocs/* javadoc/apidocs
+          
+          # Aggiungi, committa e push le modifiche
+          git add .
+          git commit -m "Aggiorna Javadoc per commit $GITHUB_SHA"
+          git push
